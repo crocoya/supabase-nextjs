@@ -1,7 +1,8 @@
 import { useState } from 'react';
+import type { AppProps } from 'next/app';
 import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs';
 import { SessionContextProvider, Session } from '@supabase/auth-helpers-react';
-import { AppProps } from 'next/app';
+import '../styles/globals.css';
 
 function MyApp({
   Component,
@@ -9,15 +10,16 @@ function MyApp({
 }: AppProps<{
   initialSession: Session;
 }>) {
-  const [supabase] = useState(() => createBrowserSupabaseClient());
+  const [supabaseClient] = useState(() => createBrowserSupabaseClient());
 
   return (
     <SessionContextProvider
-      supabaseClient={supabase}
+      supabaseClient={supabaseClient}
       initialSession={pageProps.initialSession}
     >
       <Component {...pageProps} />
     </SessionContextProvider>
   );
 }
+
 export default MyApp;
